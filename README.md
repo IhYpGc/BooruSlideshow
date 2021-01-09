@@ -1,3 +1,7 @@
+# I don't know shit, I don't check shit.
+
+From DontTalkToMeThx:
+
 # Notice: I will no longer be working on this. Unless something breaks, there will be no updates.
 
 ### From time to time, I still work on the [electron app](https://github.com/DontTalkToMeThx/BooruSlideshowElectron). From this point on, new features will only appear on the electron app.
