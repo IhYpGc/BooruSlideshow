@@ -10,7 +10,7 @@ This should work:
 1. Download the git as zip (Above link).
 3. Unzip the file.
 4. Go to chrome://extensions/ and check the box for Developer mode in the top right.
-5. Click the Load unpacked extension button and select the BooruSlideshow folder from the unziped folder for your extension to install it.
+5. Click the Load unpacked extension button and select the BooruSlideshow folder from the folder you just unzipped.
 
 # From DontTalkToMeThx:
 
