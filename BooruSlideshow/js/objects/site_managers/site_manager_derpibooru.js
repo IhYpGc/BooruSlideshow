@@ -82,7 +82,7 @@ class SiteManagerDerpibooru extends SiteManager {
 
 	addSlide(jsonPost) {
 		if (jsonPost.hasOwnProperty('representations')) {
-			if (this.isPathForSupportedMediaType(jsonPost.representations["medium"])) {
+			if (this.isPathForSupportedMediaType(jsonPost.representations["full"])) {
 				var tags = jsonPost.tags.join(",");
 
 				tags = tags.replace(/,\s/gm, ",");
@@ -99,15 +99,15 @@ class SiteManagerDerpibooru extends SiteManager {
 				var newSlide = new Slide(
 					SITE_DERPIBOORU,
 					jsonPost.id,
-					jsonPost.representations["medium"],
+					jsonPost.representations["full"],
 					jsonPost.representations["thumb"],
 					this.url + '/' + jsonPost.id,
 					jsonPost.width,
 					jsonPost.height,
 					new Date(jsonPost.created_at),
 					jsonPost.score,
-					this.getMediaTypeFromPath(jsonPost.representations["medium"]),
-					jsonPost.sha512_hash,
+					this.getMediaTypeFromPath(jsonPost.representations["full"]),
+					jsonPost.sha512_hashfull
 					tags
 				);
 				this.allUnsortedSlides.push(newSlide);
