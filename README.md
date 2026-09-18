@@ -1,22 +1,14 @@
 # BooruSlideshow
-## Firefox only
+
 ## Not permitted on the Google Chrome store.
 
-A Firefox extension for a slideshow of boorus.
+A browser extension for a slideshow of boorus.
 
-Download from Firefox Browser Add-Ons
-https://addons.mozilla.org/en-US/firefox/addon/booru-slideshow-official/
+Oringally made by @Chirmaya
+Forked from @AccountNameIsTaken with changes from Bobmester
+Updated with files from @newaccountforpr0n
 
-Download as a ZIP file
-https://github.com/Chirmaya/BooruSlideshow/raw/master/BooruSlideshow.zip
+I am an idiot, I do not claim any code as my own.
 
-
-
-
-TODO: rework below for Firefox
-
-This should work:
-1. Download the above zip file.
-3. Unzip the file.
-4. Go to chrome://extensions/ and check the box for Developer mode in the top right.
-5. Click the Load unpacked extension button and select the unzipped folder for your extension to install it.
+## Installation
+If all goes well you should be able to installed it as an 'unpacked extension' in chrome, firefox, edge, or any other Chromium based browser.
