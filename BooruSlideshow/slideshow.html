@@ -12,7 +12,7 @@
 		<div id="slide-wrapper">
 			<img id="current-image" />
 			<video id="current-video" autoplay='true' loop='true' volume='0' controls>
-				<source type="video/webm"></source>
+				<!--<source id="current-video-source-webm" type="video/webm" />-->
 			</video>
 			<img id="loading-animation" src="img/loading.gif" alt="Loading Slide" />
 			<div id="tags" style="display:none;"></div>
@@ -41,7 +41,6 @@
 				<div id="sites-to-search">
 					<h4>Sites</h4>
 					<ul>
-						<li><label><input type="checkbox" name="sites-to-search" value="ATFB" />atfbooru.ninja</label></li>
 						<li><label><input type="checkbox" name="sites-to-search" value="DANB" />danbooru.donmai.us</label></li>
 						<li><label><input type="checkbox" name="sites-to-search" value="DERP" />derpibooru.org</label></li>
 						<li id="derpibooru-api-key-container"><span><a href="https://derpibooru.org/users/edit" target="_blank">(get API key here)</a></span><br />
@@ -51,14 +50,35 @@
 						<li id="e621-login-container">
 							<label><input type="login" id="e621-login" placeholder="e621 username"/></label>
 						</li>
-						<li id="e621-api-key-container"><br /><span><a href="https://e621.net/users/home" target="_blank">(get API key here)</a></span><br />
+						<li id="e621-api-key-container">
+							<br />
+							<span><a href="https://e621.net/users/home" target="_blank">(get API key here)</a></span>
+							<br />
 							<label><input type="password" id="e621-api-key" placeholder="e621 API key"/></label>
 						</li>
-						<li><label><input type="checkbox" name="sites-to-search" value="GELB" />gelbooru.com<br />
-							<span>(need to be logged in)</span></label></li>
+						<li>
+							<label><input type="checkbox" name="sites-to-search" value="GELB" />gelbooru.com</label>
+						</li>
+						<li id="gelb-userid-container">
+							<label><input type="login" id="gelb-userid" placeholder="Gelbooru user ID"/></label>
+						</li>
+						<li id="gelb-api-key-container">
+							<br />
+							<span><a href="https://gelbooru.com/index.php?page=account&s=options" target="_blank">(get API key here)</a></span>
+							<br />
+							<label><input type="password" id="gelb-api-key" placeholder="Gelbooru API key"/></label>
+						</li>
 						<li><label><input type="checkbox" name="sites-to-search" value="KONA" />konachan.com</label></li>
-						<li><label><input type="checkbox" name="sites-to-search" value="REAL" />realbooru.com</label></li>
 						<li><label><input type="checkbox" name="sites-to-search" value="RULE" />rule34.xxx</label></li>
+						<li id="r34-userid-container">
+							<label><input type="login" id="r34-userid" placeholder="rule34 user ID"/></label>
+						</li>
+						<li id="r34-api-key-container">
+							<br />
+							<span><a href="https://rule34.xxx/index.php?page=account&s=options" target="_blank">(get API key here)</a></span>
+							<br />
+							<label><input type="password" id="r34-api-key" placeholder="rule34 API key"/></label>
+						</li>
 						<li><label><input type="checkbox" name="sites-to-search" value="SAFE" />safebooru.org</label></li>
 						<li><label><input type="checkbox" name="sites-to-search" value="XBOO" />xbooru.com</label></li>
 						<li><label><input type="checkbox" name="sites-to-search" value="YAND" />yande.re</label></li>
@@ -103,7 +123,7 @@
 							<label><input id="include-gifs" type="checkbox" checked />Include GIFs</label>
 						</li>
 						<li>
-							<label><input id="include-webms" type="checkbox" />Include WEBMs</label>
+							<label><input id="include-webms" type="checkbox" checked />Include WEBMs</label>
 						</li>
 						<li>
 							<label><input id="include-explicit" type="checkbox" />Include Explicit</label>
@@ -143,22 +163,22 @@
 							(Up to 100 queries are saved. Let me know if there is an issue.)
 						</li>
 						<li><button id="clear-history">Clear Search History</button></li>
-						<li class="new"><a href="personal_list.html">View All Favorites</a></li>
+						<li><a href="personal_list.html">View All Favorites</a></li>
 					</ul>
 				</div>
 				<div id="tips">
 					<h4>Hotkeys</h4>
 					<ul>
-						<li>Full-screen (F11)</li>
-						<li>Previous (&larr; or A)</li>
-						<li>Next (&rarr; or D)</li>
-						<li>Back 10 (W)</li>
-						<li>Forward 10 (S)</li>
-						<li>Play/pause (Enter or space)</li>
-						<li>Auto-Fit (F)</li>
-						<li class="new">Open current image in new tab (E)</li>
-						<li>Download Current Image (L)</li>
-						<li>Fave/Unfave Image (G)</li>
+						<li>[<b>F11</b>] Full-screen</li>
+						<li>[<b>&larr; or A</b>] Previous</li>
+						<li>[<b>&rarr; or D</b>] Next</li>
+						<li>[<b>W</b>] Back 10</li>
+						<li>[<b>S</b>] Forward 10</li>
+						<li>[<b>Enter or Space</b>] Play/pause</li>
+						<li>[<b>F</b>] Auto-fit</li>
+						<li>[<b>E</b>] Open image source</li>
+						<li>[<b>L</b>] Download image to <i>/Downloads/bs/</i></li>
+						<li>[<b>G</b>] Fave/Unfave image</li>
 						<li><i>Issues or suggestions: <a href="https://github.com/Chirmaya/BooruSlideshow/issues" target="_blank">GitHub</a></i></li>
 					</ul>
 				</div>
@@ -166,15 +186,14 @@
         </div>
 		
 		<script src="js/globals.js"></script>
+		<script src="js/functions.js"></script>
 		<script src="js/objects/web_requester.js"></script>
 		<script src="js/objects/site_manager.js"></script>
-		<script src="js/objects/site_managers/site_manager_atfbooru.js"></script>
 		<script src="js/objects/site_managers/site_manager_danbooru.js"></script>
 		<script src="js/objects/site_managers/site_manager_derpibooru.js"></script>
 		<script src="js/objects/site_managers/site_manager_e621.js"></script>
 		<script src="js/objects/site_managers/site_manager_gelbooru.js"></script>
 		<script src="js/objects/site_managers/site_manager_konachan.js"></script>
-		<script src="js/objects/site_managers/site_manager_realbooru.js"></script>
 		<script src="js/objects/site_managers/site_manager_rule34.js"></script>
 		<script src="js/objects/site_managers/site_manager_safebooru.js"></script>
 		<script src="js/objects/site_managers/site_manager_xbooru.js"></script>

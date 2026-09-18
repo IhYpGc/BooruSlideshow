@@ -1,11 +1,12 @@
-//let slideshowController = null;
+let slideshowController = null;
 
 document.addEventListener('DOMContentLoaded', function () {
-    new SlideshowController({
+    slideshowController = new SlideshowController({
         'warningMessage': document.getElementById('warning-message'),
         'infoMessage': document.getElementById('info-message'),
         'currentImage': document.getElementById('current-image'),
         'currentVideo': document.getElementById('current-video'),
+        'currentVideoSourceWebm': document.getElementById('current-video-source-webm'),
         'loadingAnimation': document.getElementById('loading-animation'),
         'navigation': document.getElementById('navigation'),
         'currentSlideNumber': document.getElementById('current-slide-number'),
@@ -39,12 +40,25 @@ document.addEventListener('DOMContentLoaded', function () {
         'e621ApiKeyContainer': document.getElementById('e621-api-key-container'),
         'e621Login': document.getElementById('e621-login'),
         'e621ApiKey': document.getElementById('e621-api-key'),
+        'gelbUserIdContainer': document.getElementById('gelb-userid-container'),
+        'gelbApiKeyContainer': document.getElementById('gelb-api-key-container'),
+        'gelbUserId': document.getElementById('gelb-userid'),
+        'gelbApiKey': document.getElementById('gelb-api-key'),
+		'r34UserIdContainer': document.getElementById('r34-userid-container'),
+        'r34ApiKeyContainer': document.getElementById('r34-api-key-container'),
+        'r34UserId': document.getElementById('r34-userid'),
+        'r34ApiKey': document.getElementById('r34-api-key'),
         'storeHistoryCheckBox': document.getElementById('store-history'),
-		'clearHistoryButton': document.getElementById('clear-history'),
+        'clearHistoryButton': document.getElementById('clear-history'),
         'searchHistory': document.getElementById('search-history'),
         'favoriteButton': document.getElementById('favorite-button'),
         'tags': document.getElementById('tags'),
         'slideWrapper': document.getElementById('slide-wrapper'),
         'includeDupesCheckBox': document.getElementById('include-dupes')
     });
+
+    (async () => {
+        let result = await slideshowController.initialize();
+        slideshowController.searchTextChanged();
+    })();
 });

@@ -187,7 +187,7 @@ class PersonalListView
                 }
                 if (key == E_KEY_ID)
                 {
-                    _this.openCurrentSlide();
+                    _this.openCurrentSlideSource();
                 }
             }
         });
@@ -225,7 +225,7 @@ class PersonalListView
         });
     }
 
-    openCurrentSlide()
+    openCurrentSlideSource()
     {
         let currentSlide = this._model.getCurrentSlide();
 
@@ -294,6 +294,7 @@ class PersonalListView
 		
 		this.uiElements.currentVideo.addEventListener('loadeddata', function() {
 			_this.hideLoadingAnimation();
+            logForDev('currentVideo.addEventListener(loadeddata)');
 		}, false);
     }
 
@@ -358,8 +359,11 @@ class PersonalListView
 	
 	displayVideo(currentSlide) {
         var currentVideo = this.uiElements.currentVideo;
+        var currentVideoSource = this.uiElements.currentVideoSourceWebm;
 
-        currentVideo.src = currentSlide.fileUrl;
+        logForDev('clearing video1');
+
+        currentVideoSource.src = currentSlide.fileUrl;
         currentVideo.style.display = 'inline';
 
 		this.clearImage();
@@ -483,6 +487,8 @@ class PersonalListView
 
     clearImage() {
         var currentImage = this.uiElements.currentImage;
+
+        logForDev('clearing image1');
 
         currentImage.src = '';
         currentImage.removeAttribute('alt');
