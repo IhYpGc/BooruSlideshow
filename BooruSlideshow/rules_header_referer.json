@@ -45,5 +45,31 @@
             "urlFilter": "||e621.net/",
             "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
         }
+    },
+   {
+        "id": ,
+        "priority": 1,
+        "action":
+        {
+            "type": "modifyHeaders",
+            "requestHeaders":
+            [
+                {
+                    "header": "Referer",
+                    "operation": "set",
+                    "value": "https://rule34.xxx"
+                },
+                {
+                    "header": "Sec-Fetch-Mode",
+                    "operation": "set",
+                    "value": "same-origin"
+                }
+            ]
+        },
+        "condition":
+        {
+            "urlFilter": "||rule34.xxx/",
+            "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+        }
     }
 ]

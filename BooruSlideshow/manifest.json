@@ -45,9 +45,10 @@
 		"https://e621.net/*",
 		"https://*.e621.net/*",
 		"https://e6ai.net/*",
+		"https://*.e6ai.net/*",
 		"https://*.gelbooru.com/*",
 		"https://konachan.com/*",
-		"https://rule34.xxx/*",
+		"https://*.rule34.xxx/*",
 		"https://safebooru.org/*",
 		"https://xbooru.com/*",
 		"https://yande.re/*"
