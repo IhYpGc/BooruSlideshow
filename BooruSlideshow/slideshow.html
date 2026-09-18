@@ -57,6 +57,17 @@
 							<label><input type="password" id="e621-api-key" placeholder="e621 API key"/></label>
 						</li>
 						<li>
+						<li><label><input type="checkbox" name="sites-to-search" value="E6AI" />e6ai.net</label></li>
+						<li id="e6ai-login-container">
+							<label><input type="login" id="e6ai-login" placeholder="e6ai username"/></label>
+						</li>
+						<li id="e6ai-api-key-container">
+							<br />
+							<span><a href="https://e6ai.net/users/home" target="_blank">(get API key here)</a></span>
+							<br />
+							<label><input type="password" id="e6ai-api-key" placeholder="e6ai API key"/></label>
+						</li>
+						<li>
 							<label><input type="checkbox" name="sites-to-search" value="GELB" />gelbooru.com</label>
 						</li>
 						<li id="gelb-userid-container">
@@ -192,6 +203,7 @@
 		<script src="js/objects/site_managers/site_manager_danbooru.js"></script>
 		<script src="js/objects/site_managers/site_manager_derpibooru.js"></script>
 		<script src="js/objects/site_managers/site_manager_e621.js"></script>
+		<script src="js/objects/site_managers/site_manager_e6ai.js"></script>
 		<script src="js/objects/site_managers/site_manager_gelbooru.js"></script>
 		<script src="js/objects/site_managers/site_manager_konachan.js"></script>
 		<script src="js/objects/site_managers/site_manager_rule34.js"></script>

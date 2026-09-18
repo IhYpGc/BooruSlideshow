@@ -36,6 +36,8 @@ class SlideshowView
         this.derpibooruApiKeyChangedEvent = new Event(this);
         this.e621LoginChangedEvent = new Event(this);
         this.e621ApiKeyChangedEvent = new Event(this);
+        this.e6aiLoginChangedEvent = new Event(this);
+        this.e6aiApiKeyChangedEvent = new Event(this);
         this.gelbUserIdChangedEvent = new Event(this);
         this.gelbApiKeyChangedEvent = new Event(this);
         this.r34UserIdChangedEvent = new Event(this);
@@ -143,6 +145,14 @@ class SlideshowView
 
         this._model.e621ApiKeyUpdatedEvent.attach(function () {
             _this.updateE621ApiKey();
+        });
+
+        this._model.e6aiLoginUpdatedEvent.attach(function () {
+            _this.updateE6aiLogin();
+        });
+
+        this._model.e6aiApiKeyUpdatedEvent.attach(function () {
+            _this.updateE6aiApiKey();
         });
 
         this._model.gelbUserIdUpdatedEvent.attach(function () {
@@ -264,6 +274,8 @@ class SlideshowView
                 document.activeElement !== _this.uiElements.derpibooruApiKey &&
                 document.activeElement !== _this.uiElements.e621Login &&
                 document.activeElement !== _this.uiElements.e621ApiKey &&
+                document.activeElement !== _this.uiElements.e6aiLogin &&
+                document.activeElement !== _this.uiElements.e6aiApiKey &&
                 document.activeElement !== _this.uiElements.gelbUserId &&
                 document.activeElement !== _this.uiElements.gelbApiKey &&
                 document.activeElement !== _this.uiElements.r34UserId &&
@@ -402,6 +414,14 @@ class SlideshowView
 
         this.uiElements.e621ApiKey.addEventListener('change', function () {
             _this.e621ApiKeyChangedEvent.notify();
+        });
+
+        this.uiElements.e6aiLogin.addEventListener('change', function () {
+            _this.e6aiLoginChangedEvent.notify();
+        });
+
+        this.uiElements.e6aiApiKey.addEventListener('change', function () {
+            _this.e6aiApiKeyChangedEvent.notify();
         });
 
         this.uiElements.gelbUserId.addEventListener('change', function () {
@@ -923,6 +943,12 @@ class SlideshowView
 				this.uiElements.e621ApiKeyContainer.style.display = checked ? 'inline' : 'none';
 			}
 
+            if (site == SITE_E6AI)
+			{
+                this.uiElements.e6aiLoginContainer.style.display = checked ? 'inline' : 'none';
+				this.uiElements.e6aiApiKeyContainer.style.display = checked ? 'inline' : 'none';
+			}
+
             if (site == SITE_GELBOORU)
             {
                 this.uiElements.gelbUserIdContainer.style.display = checked ? 'inline' : 'none';
@@ -1133,6 +1159,22 @@ class SlideshowView
 
     updateE621ApiKey() {
         this.uiElements.e621ApiKey.value = this._model.e621ApiKey;
+    }
+
+    getE6aiLogin() {
+        return this.uiElements.e6aiLogin.value.trim();
+    }
+
+    updateE6aiLogin() {
+        this.uiElements.e6aiLogin.value = this._model.e6aiLogin;
+    }
+
+    getE6aiApiKey() {
+        return this.uiElements.e6aiApiKey.value.trim();
+    }
+
+    updateE6aiApiKey() {
+        this.uiElements.e6aiApiKey.value = this._model.e6aiApiKey;
     }
 
     getGelbUserId() {

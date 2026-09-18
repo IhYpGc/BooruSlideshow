@@ -5,6 +5,7 @@ let LOGGING_MODE = LOGGING_MODE_PROD;
 let SITE_DANBOORU = 'DANB';
 let SITE_DERPIBOORU = 'DERP';
 let SITE_E621 = 'E621';
+let SITE_E6AI = 'E6AI';
 let SITE_GELBOORU = 'GELB';
 let SITE_KONACHAN = 'KONA';
 let SITE_RULE34 = 'RULE';
@@ -71,6 +72,15 @@ SITE_QUERY_TERM_ASSOCIATIONS[SITE_DERPIBOORU] = {
 	"sort:-upload" : ""
 };
 SITE_QUERY_TERM_ASSOCIATIONS[SITE_E621] = {
+	"sort:id" : "order:id",
+	"sort:id_asc" : "order:id_asc",
+	"sort:id_desc" : "order:id_desc",
+	"sort:score" : "order:score",
+	"sort:score_asc" : "order:score_asc",
+	"sort:score_desc" : "order:score_desc",
+	"sort:-upload" : ""
+};
+SITE_QUERY_TERM_ASSOCIATIONS[SITE_E6AI] = {
 	"sort:id" : "order:id",
 	"sort:id_asc" : "order:id_asc",
 	"sort:id_desc" : "order:id_desc",

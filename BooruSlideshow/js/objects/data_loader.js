@@ -37,6 +37,8 @@ class DataLoader
         var derpibooruApiKey = obj['derpibooruApiKey'];
         var e621Login = obj['e621Login'];
         var e621ApiKey = obj['e621ApiKey'];
+        var e6aiLogin = obj['e6aiLogin'];
+        var e6aiApiKey = obj['e6aiApiKey'];
         var gelbUserId = obj['gelbUserId'];
         var gelbApiKey = obj['gelbApiKey'];
         var r34UserId = obj['r34UserId'];
@@ -102,6 +104,7 @@ class DataLoader
                 _this.addPropertyIfExists(sitesToSearch, cleanSitesToSearch, SITE_DANBOORU);
                 _this.addPropertyIfExists(sitesToSearch, cleanSitesToSearch, SITE_DERPIBOORU);
                 _this.addPropertyIfExists(sitesToSearch, cleanSitesToSearch, SITE_E621);
+                _this.addPropertyIfExists(sitesToSearch, cleanSitesToSearch, SITE_E6AI);
                 _this.addPropertyIfExists(sitesToSearch, cleanSitesToSearch, SITE_GELBOORU);
                 _this.addPropertyIfExists(sitesToSearch, cleanSitesToSearch, SITE_KONACHAN);
                 _this.addPropertyIfExists(sitesToSearch, cleanSitesToSearch, SITE_RULE34);
@@ -180,6 +183,16 @@ class DataLoader
                 _this._model.setE621ApiKey(e621ApiKey);
             }
 
+            if (e6aiLogin != null && _this._model.e6aiLogin != e6aiLogin)
+            {
+                _this._model.setE6aiLogin(e6aiLogin);
+            }
+
+            if (e6aiApiKey != null && _this._model.e6aiApiKey != e6aiApiKey)
+            {
+                _this._model.setE6aiApiKey(e6aiApiKey);
+            }
+
             if (gelbUserId != null && _this._model.gelbUserId != gelbUserId)
             {
                 _this._model.setGelbUserId(gelbUserId);
@@ -248,6 +261,8 @@ class DataLoader
             'derpibooruApiKey',
             'e621Login',
             'e621ApiKey',
+            'e6aiLogin',
+            'e6aiApiKey',
             'gelbUserId',
             'gelbApiKey',
             'r34UserId',
@@ -373,6 +388,16 @@ class DataLoader
     saveE621ApiKey()
     {
         chrome.storage.sync.set({'e621ApiKey': this._model.e621ApiKey});
+    }
+
+    saveE6aiLogin()
+    {
+        chrome.storage.sync.set({'e6aiLogin': this._model.e6aiLogin});
+    }
+
+    saveE6aiApiKey()
+    {
+        chrome.storage.sync.set({'e6aiApiKey': this._model.e6aiApiKey});
     }
 
     saveGelbUserId()

@@ -73,6 +73,8 @@ class PersonalList
 
             if (listItem.siteId == SITE_E621){
                 listItem.tags = await _this.getImageTagsE621(listItem.id, webRequester);
+            }else if (listItem.siteId == SITE_E6AI){
+                listItem.tags = await _this.getImageTagsE6ai(listItem.id, webRequester);
             }else if (listItem.siteId == SITE_RULE34){
                 listItem.tags = await _this.getImageTagsRule34(listItem.id, webRequester);
             }else if (listItem.siteId == SITE_DANBOORU){
@@ -113,6 +115,18 @@ class PersonalList
 		return condensedTagArray.join(" ");
     }
 
+    condenseE6aiTags(tags)
+    {
+        var condensedTagArray = [];
+
+		for(var prop in tags)
+		{
+			condensedTagArray = condensedTagArray.concat(tags[prop]);
+		}
+
+		return condensedTagArray.join(" ");
+    }
+
     getImageTagsE621(id, webRequester)
     {
         return new Promise((resolve) => {
@@ -123,6 +137,20 @@ class PersonalList
                     return
                 }
                 resolve(this.condenseE621Tags(data.tags))
+            })
+        })
+    }
+
+    getImageTagsE6ai(id, webRequester)
+    {
+        return new Promise((resolve) => {
+            webRequester.makeWebsiteRequest(`https://e6ai.net/posts.json?tags=id%3A${id}`, () => {
+                var data = JSON.parse(arguments[1].xhr.responseText).posts[0]
+                if(!data){ 
+                    resolve("")
+                    return
+                }
+                resolve(this.condenseE6aiTags(data.tags))
             })
         })
     }
