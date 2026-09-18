@@ -5,7 +5,9 @@
 A browser extension for a slideshow of boorus.
 
 Oringally made by @Chirmaya
+
 Forked from @AccountNameIsTaken with changes from Bobmester
+
 Updated with files from @newaccountforpr0n
 
 I am an idiot, I do not claim any code as my own.
