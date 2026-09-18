@@ -19,7 +19,7 @@
             "urlFilter": "||gelbooru.com/",
             "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
         }
-    }
+    },
    {
         "id": 2,
         "priority": 1,
@@ -32,7 +32,7 @@
                     "header": "Referer",
                     "operation": "set",
                     "value": "https://e621.net"
-                }
+                },
                 {
                     "header": "Sec-Fetch-Mode",
                     "operation": "set",

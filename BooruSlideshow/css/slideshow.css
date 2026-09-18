@@ -321,6 +321,8 @@
 	#derpibooru-api-key,
 	#e621-api-key,
 	#e621-login,
+	#e6ai-api-key,
+	#e6ai-login,
 	#gelb-userid,
 	#gelb-api-key,
 	#r34-userid,
@@ -332,7 +334,9 @@
 	textarea:focus,
 	#derpibooru-api-key:focus,
 	#e621-api-key:focus,
-	#e621-login:focus {
+	#e621-login:focus,
+	#e6ai-api-key:focus,
+	#e6ai-login:focus{
 		background: #292c3e;
 		color: #fff;
 	}
