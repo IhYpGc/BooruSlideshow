@@ -140,6 +140,14 @@ class SlideshowController
             _this.e621ApiKeyChanged();
         });
 
+        this._view.e6aiLoginChangedEvent.attach(function () {
+            _this.e6aiLoginChanged();
+        });
+
+        this._view.e6aiApiKeyChangedEvent.attach(function () {
+            _this.e6aiApiKeyChanged();
+        });
+
         this._view.gelbUserIdChangedEvent.attach(function () {
             _this.gelbUserIdChanged();
         });
@@ -430,6 +438,20 @@ class SlideshowController
         var e621ApiKey = this._view.getE621ApiKey();
 
         this._model.setE621ApiKey(e621ApiKey);
+    }
+
+    e6aiLoginChanged()
+    {
+        var e6aiLogin = this._view.getE6aiLogin();
+
+        this._model.setE6aiLogin(e6aiLogin);
+    }
+
+    e6aiApiKeyChanged()
+    {
+        var e6aiApiKey = this._view.getE6aiApiKey();
+
+        this._model.setE6aiApiKey(e6aiApiKey);
     }
 
     gelbUserIdChanged()

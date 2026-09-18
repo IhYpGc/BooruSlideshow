@@ -12,6 +12,7 @@ class SlideshowModel{
             [SITE_DANBOORU]: false,
             [SITE_DERPIBOORU]: false,
             [SITE_E621]: false,
+            [SITE_E6AI]: false,
             [SITE_GELBOORU]: false,
             [SITE_KONACHAN]: false,
             [SITE_RULE34]: false,
@@ -35,6 +36,8 @@ class SlideshowModel{
         this.derpibooruApiKey = '';
         this.e621Login = ''
         this.e621ApiKey = ''
+        this.e6aiLogin = ''
+        this.e6aiApiKey = ''
         this.gelbLoginId = ''
         this.gelbApiKey = ''
 		this.r34LoginId = ''
@@ -69,6 +72,8 @@ class SlideshowModel{
         this.derpibooruApiKeyUpdatedEvent = new Event(this);
         this.e621LoginUpdatedEvent = new Event(this);
         this.e621ApiKeyUpdatedEvent = new Event(this);
+        this.e6aiLoginUpdatedEvent = new Event(this);
+        this.e6aiApiKeyUpdatedEvent = new Event(this);
         this.gelbUserIdUpdatedEvent = new Event(this);
         this.gelbApiKeyUpdatedEvent = new Event(this);
 		this.r34UserIdUpdatedEvent = new Event(this);
@@ -95,6 +100,7 @@ class SlideshowModel{
         this.sitesManager.addSite(SITE_DANBOORU, standardPageLimit);
         this.sitesManager.addSite(SITE_DERPIBOORU, 50);
         this.sitesManager.addSite(SITE_E621, standardPageLimit);
+        this.sitesManager.addSite(SITE_E6AI, standardPageLimit);
         this.sitesManager.addSite(SITE_GELBOORU, standardPageLimit);
         this.sitesManager.addSite(SITE_KONACHAN, standardPageLimit);
         this.sitesManager.addSite(SITE_RULE34, standardPageLimit);
@@ -614,6 +620,24 @@ class SlideshowModel{
         this.dataLoader.saveE621ApiKey();
 
         this.e621ApiKeyUpdatedEvent.notify();
+    }
+
+    setE6aiLogin(e6aiLogin)
+    {
+        this.e6aiLogin = e6aiLogin;
+
+        this.dataLoader.saveE6aiLogin();
+
+        this.e6aiLoginUpdatedEvent.notify();
+    }
+
+    setE6aiApiKey(e6aiApiKey)
+    {
+        this.e6aiApiKey = e6aiApiKey;
+
+        this.dataLoader.saveE6aiApiKey();
+
+        this.e6aiApiKeyUpdatedEvent.notify();
     }
 
     setGelbUserId(gelbUserId)

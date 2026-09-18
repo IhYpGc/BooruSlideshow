@@ -10,6 +10,8 @@ class SiteManagerFactory
 				return new SiteManagerDerpibooru(sitesManager, pageLimit);
 			case SITE_E621:
 				return new SiteManagerE621(sitesManager, pageLimit);
+			case SITE_E6AI:
+				return new SiteManagerE6ai(sitesManager, pageLimit);
 			case SITE_GELBOORU:
 				return new SiteManagerGelbooru(sitesManager, pageLimit);
 			case SITE_KONACHAN:

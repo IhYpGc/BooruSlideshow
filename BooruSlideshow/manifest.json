@@ -4,7 +4,7 @@
 	"name": "Booru Slideshow",
 	"short_name": "Booru SS",
 	"description": "View a slideshow from a Booru site based on your search.",
-	"version": "10.6",
+	"version": "10.7.1",
 
 	"action":
 	{
@@ -43,9 +43,11 @@
 		"https://cdn.donmai.us/*",
 		"https://derpibooru.org/*",
 		"https://e621.net/*",
+		"https://*.e621.net/*",
+		"https://e6ai.net/*",
 		"https://*.gelbooru.com/*",
 		"https://konachan.com/*",
-		"https://*.rule34.xxx/*",
+		"https://rule34.xxx/*",
 		"https://safebooru.org/*",
 		"https://xbooru.com/*",
 		"https://yande.re/*"
@@ -56,10 +58,9 @@
 		[
 			{
 				"id": "ruleset_header_referer",
-				"enabled": false,
+				"enabled": true,
 				"path": "rules_header_referer.json"
 			}
 		]
 	}
 }
-==== BASE ====

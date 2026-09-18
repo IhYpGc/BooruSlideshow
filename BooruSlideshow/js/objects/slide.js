@@ -6,7 +6,8 @@ class Slide
 		this.id = id;
 		this.fileUrl = fileUrl;
 		this.previewFileUrl = previewFileUrl;
-		this.viewableWebsitePostUrl = viewableWebsitePostUrl;
+		//this.viewableWebsitePostUrl = viewableWebsitePostUrl;
+		this.viewableWebsitePostUrl = fileUrl;
 		this.width = width;
 		this.height = height;
 		this.date = date;

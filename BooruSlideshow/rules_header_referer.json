@@ -16,8 +16,34 @@
         },
         "condition":
         {
-            "urlFilter": "https://*.gelbooru.com/*",
-            "resourceTypes": ["main_frame"]
+            "urlFilter": "||gelbooru.com/",
+            "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+        }
+    }
+   {
+        "id": 2,
+        "priority": 1,
+        "action":
+        {
+            "type": "modifyHeaders",
+            "requestHeaders":
+            [
+                {
+                    "header": "Referer",
+                    "operation": "set",
+                    "value": "https://e621.net"
+                }
+                {
+                    "header": "Sec-Fetch-Mode",
+                    "operation": "set",
+                    "value": "same-origin"
+                }
+            ]
+        },
+        "condition":
+        {
+            "urlFilter": "||e621.net/",
+            "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
         }
     }
 ]

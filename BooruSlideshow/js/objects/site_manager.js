@@ -214,6 +214,10 @@ class SiteManager
 		{
 			jsonPosts = jsonPosts["posts"]
 		}
+		else if (this.id == SITE_E6AI)
+		{
+			jsonPosts = jsonPosts["posts"]
+		}
 		
 		this.hasExhaustedSearch = (jsonPosts.length < this.pageLimit);
 
