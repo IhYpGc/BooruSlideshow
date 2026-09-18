@@ -1,5 +1,38 @@
 Changelog
 
+Version 10.6
+* Added API key feature to support Rule34
+
+Version 10.5
+* Fixed messed-up webm setting toggle.
+* Added API key feature to support Gelbooru.
+* Loading of settings should happen prior to any pinging of the sites now.
+
+Version 10.4
+* Auto-fit is now enabled by default for new installs.
+* Include WEBMs is now enabled by default for new installs. (Excluding rating:e via checkbox, but including only rating:e results via text webms will still get it stuck eternally trying to load. Will need to rework that system later.)
+* Removed support for ATFBooru
+* Included additional URL permissions for Danbooru content. You'll need to manually enable this permission under the Firefox extension permission settings.
+
+Version 10.3
+* Major fix: Firefox no longer stops loading/preloading videos. Causes a lot of warnings in the console, but it seems way faster right now. May need to work on this more later.
+* Fixed auto-populating text not updating the internal model's search text value.
+
+Version 10.2
+* Fixed some errors that popped up when global blacklists were applied. Now it will try to fix it if possible, and skip if not.
+
+Version 10.1
+* Updated manifest to version 3
+* Updated ATFBooru URL
+* Commented out some blocking requests used to modify headers since they don't seem to be needed right now.
+* Hid console logs of the response text for HTTP 400 errors
+* Quick fix for Derpibooru's new data format
+
+Version 10.0
+* License changed to stop people from uploading this in my name
+* Removed support for Realbooru since it doesn't contain the content this is intended for
+* Fixed the Gelbooru searches
+
 Version 9.1
 * Fixed bug with dates for posts from e621
 * Fixed preloading only working on up to 6 items rather than all 10

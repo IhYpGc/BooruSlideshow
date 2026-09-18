@@ -140,6 +140,22 @@ class SlideshowController
             _this.e621ApiKeyChanged();
         });
 
+        this._view.gelbUserIdChangedEvent.attach(function () {
+            _this.gelbUserIdChanged();
+        });
+
+        this._view.gelbApiKeyChangedEvent.attach(function () {
+            _this.gelbApiKeyChanged();
+        });
+
+        this._view.r34UserIdChangedEvent.attach(function () {
+            _this.r34UserIdChanged();
+        });
+
+        this._view.r34ApiKeyChangedEvent.attach(function () {
+            _this.r34ApiKeyChanged();
+        });
+
         this._view.storeHistoryChangedEvent.attach(function () {
             _this.storeHistoryChanged();
         });
@@ -155,22 +171,21 @@ class SlideshowController
         this._view.favoriteButtonClickedEvent.attach(function () {
             _this.favoriteButtonClicked();
         });
+    }
 
-        this._model.loadUserSettings();
-        
+    async initialize()
+    {
+        //console.log("SlideshowController.initialize");
+        await this._model.loadUserSettings();
         this._model.pingSites();
     }
 
     currentSlideClicked()
     {
-        var currentSlide = this._model.getCurrentSlide();
+        /* temp disable. may be moving down to its own section instead of messing with the clicking
+        this._view.openCurrentSlideSource();
 
-        if (currentSlide == null)
-            return;
-
-        this._view.openUrlInNewWindow(currentSlide.viewableWebsitePostUrl);
-
-        this._model.pauseSlideshow();
+        this._model.pauseSlideshow();*/
     }
 	
     videoVolumeChanged()
@@ -415,6 +430,34 @@ class SlideshowController
         var e621ApiKey = this._view.getE621ApiKey();
 
         this._model.setE621ApiKey(e621ApiKey);
+    }
+
+    gelbUserIdChanged()
+    {
+        var gelbUserId = this._view.getGelbUserId();
+
+        this._model.setGelbUserId(gelbUserId);
+    }
+
+    gelbApiKeyChanged()
+    {
+        var gelbApiKey = this._view.getGelbApiKey();
+
+        this._model.setGelbApiKey(gelbApiKey);
+    }
+	
+	r34UserIdChanged()
+    {
+        var r34UserId = this._view.getR34UserId();
+
+        this._model.setR34UserId(r34UserId);
+    }
+
+    r34ApiKeyChanged()
+    {
+        var r34ApiKey = this._view.getR34ApiKey();
+
+        this._model.setR34ApiKey(r34ApiKey);
     }
 
     storeHistoryChanged()

@@ -75,16 +75,12 @@ class PersonalList
                 listItem.tags = await _this.getImageTagsE621(listItem.id, webRequester);
             }else if (listItem.siteId == SITE_RULE34){
                 listItem.tags = await _this.getImageTagsRule34(listItem.id, webRequester);
-            }else if (listItem.siteId == SITE_ATFBOORU){
-                listItem.tags = await _this.getImageTagsATF(listItem.id, webRequester);
             }else if (listItem.siteId == SITE_DANBOORU){
                 listItem.tags = await _this.getImageTagsDB(listItem.id, webRequester);
             }else if (listItem.siteId == SITE_DERPIBOORU){
                 listItem.tags = await _this.getImageTagsDerp(listItem.id, webRequester);
             }else if (listItem.siteId == SITE_KONACHAN){
                 listItem.tags = await _this.getImageTagsKona(listItem.id, webRequester);
-            }else if (listItem.siteId == SITE_REALBOORU){
-                listItem.tags = await _this.getImageTagsReal(listItem.id, webRequester);
             }else if (listItem.siteId == SITE_SAFEBOORU){
                 listItem.tags = await _this.getImageTagsSafe(listItem.id, webRequester);
             }else if (listItem.siteId == SITE_XBOORU){
@@ -171,21 +167,6 @@ class PersonalList
                     return
                 }
                 resolve(data.tags)
-            })
-        })
-    }
-
-    getImageTagsReal(id, webRequester)
-    {
-        return new Promise((resolve) => {
-            webRequester.makeWebsiteRequest(`https://realbooru.com/index.php?page=dapi&s=post&q=index&tags=id%3A${id}`, () => {
-                var parser = new DOMParser()
-                var data = parser.parseFromString(arguments[1].xhr.responseText, "text/xml")
-                if(!data){ 
-                    resolve("")
-                    return
-                }
-                resolve(data.getElementsByTagName("post")[0].getAttribute("tags"))
             })
         })
     }

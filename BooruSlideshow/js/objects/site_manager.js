@@ -109,6 +109,9 @@ class SiteManager
 				url,
 				function(responseText){
 					siteManager.lastPageLoaded++;
+
+					logForDev(responseText);
+
 					siteManager.addSlides(responseText);
 				},
 				this.handleErrorFromSiteResponse.bind(siteManager),
@@ -135,7 +138,12 @@ class SiteManager
 		catch (e)
 		{
 			console.log('status code = ' + statusCode);
-			console.log(responseText);
+
+			if (statusCode != 400)
+			{
+				console.log(responseText);
+			}
+			
 			possibleJson = null;
 		}
 		
@@ -177,6 +185,8 @@ class SiteManager
 		{
 			var xmlPost = xmlPosts[i];
 			
+			logForDev(xmlPost);
+
 			this.addSlide(xmlPost);
 		}
 	}
@@ -198,7 +208,7 @@ class SiteManager
 		
 		if (this.id == SITE_DERPIBOORU)
 		{
-			jsonPosts = jsonPosts["search"];
+			jsonPosts = jsonPosts["images"];
 		}
 		else if (this.id == SITE_E621)
 		{
@@ -211,6 +221,8 @@ class SiteManager
 		{
 			var jsonPost = jsonPosts[i];
 			
+			logForDev(jsonPost);
+
 			this.addSlide(jsonPost);
 		}
 	}
@@ -227,12 +239,18 @@ class SiteManager
 
 	convertSDateToDate(sDate)
 	{
-		console.log('passed in ' + sDate);
+		//console.log('passed in ' + sDate);
 		return new Date(sDate * 1000);
 	}
 
 	isPathForSupportedMediaType(filePath)
 	{
+		if (filePath == null)
+		{
+			console.log("Trying to figure out the media type of a null file path.");
+			return;
+		}
+
 		var mediaType = this.getMediaTypeFromPath(filePath)
 		
 		return this.isMediaTypeSupported(mediaType);

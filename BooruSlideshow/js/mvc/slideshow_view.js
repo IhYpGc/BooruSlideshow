@@ -36,6 +36,10 @@ class SlideshowView
         this.derpibooruApiKeyChangedEvent = new Event(this);
         this.e621LoginChangedEvent = new Event(this);
         this.e621ApiKeyChangedEvent = new Event(this);
+        this.gelbUserIdChangedEvent = new Event(this);
+        this.gelbApiKeyChangedEvent = new Event(this);
+        this.r34UserIdChangedEvent = new Event(this);
+        this.r34ApiKeyChangedEvent = new Event(this);
         this.storeHistoryChangedEvent = new Event(this);
         this.clearHistoryClickedEvent = new Event(this);
         this.favoriteKeyPressedEvent = new Event(this);
@@ -141,6 +145,22 @@ class SlideshowView
             _this.updateE621ApiKey();
         });
 
+        this._model.gelbUserIdUpdatedEvent.attach(function () {
+            _this.updateGelbUserId();
+        });
+
+        this._model.gelbApiKeyUpdatedEvent.attach(function () {
+            _this.updateGelbApiKey();
+        });
+
+		this._model.r34UserIdUpdatedEvent.attach(function () {
+            _this.updateR34UserId();
+        });
+
+        this._model.r34ApiKeyUpdatedEvent.attach(function () {
+            _this.updateR34ApiKey();
+        });
+
         this._model.storeHistoryUpdatedEvent.attach(function () {
             _this.updateStoreHistory();
         });
@@ -242,8 +262,13 @@ class SlideshowView
                 document.activeElement !== _this.uiElements.maxHeightTextBox &&
                 document.activeElement !== _this.uiElements.blacklist &&
                 document.activeElement !== _this.uiElements.derpibooruApiKey &&
+                document.activeElement !== _this.uiElements.e621Login &&
                 document.activeElement !== _this.uiElements.e621ApiKey &&
-                document.activeElement !== _this.uiElements.e621Login) {
+                document.activeElement !== _this.uiElements.gelbUserId &&
+                document.activeElement !== _this.uiElements.gelbApiKey &&
+                document.activeElement !== _this.uiElements.r34UserId &&
+                document.activeElement !== _this.uiElements.r34ApiKey
+                ) {
                 
                 if (key == LEFT_ARROW_KEY_ID || key == A_KEY_ID)
                     _this.previousNavButtonClickedEvent.notify();
@@ -276,7 +301,7 @@ class SlideshowView
                 }
                 if (key == E_KEY_ID)
                 {
-                    _this.openCurrentSlide();
+                    _this.openCurrentSlideSource();
                 }
                 if (key == R_KEY_ID)
                 {
@@ -377,6 +402,22 @@ class SlideshowView
 
         this.uiElements.e621ApiKey.addEventListener('change', function () {
             _this.e621ApiKeyChangedEvent.notify();
+        });
+
+        this.uiElements.gelbUserId.addEventListener('change', function () {
+            _this.gelbUserIdChangedEvent.notify();
+        });
+
+        this.uiElements.gelbApiKey.addEventListener('change', function () {
+            _this.gelbApiKeyChangedEvent.notify();
+        });
+
+        this.uiElements.r34UserId.addEventListener('change', function () {
+            _this.r34UserIdChangedEvent.notify();
+        });
+
+        this.uiElements.r34ApiKey.addEventListener('change', function () {
+            _this.r34ApiKeyChangedEvent.notify();
         });
 
         this.uiElements.storeHistoryCheckBox.addEventListener('change', function () {
@@ -521,6 +562,8 @@ class SlideshowView
 	displayImage(currentSlide) {
         var currentImage = this.uiElements.currentImage;
 
+        logForDev('image = ' + currentSlide.fileUrl);
+
         currentImage.src = currentSlide.fileUrl;
         currentImage.setAttribute('alt', currentSlide.id);
         currentImage.style.display = 'inline';
@@ -531,9 +574,14 @@ class SlideshowView
 	
 	displayVideo(currentSlide) {
         var currentVideo = this.uiElements.currentVideo;
+        //var currentVideoSource = this.uiElements.currentVideoSourceWebm;
 
+        logForDev('video = ' + currentSlide.fileUrl);
+
+        //currentVideoSource.src = currentSlide.fileUrl;
         currentVideo.src = currentSlide.fileUrl;
         currentVideo.style.display = 'inline';
+        //currentVideo.load(); // Firefox workaround to it sometimes not loading videos
 
 		this.clearImage();
         this.updateSlideSize();
@@ -657,6 +705,8 @@ class SlideshowView
     clearImage() {
         var currentImage = this.uiElements.currentImage;
 
+        logForDev('image cleared');
+
         currentImage.src = '';
         currentImage.removeAttribute('alt');
         currentImage.style.display = 'none';
@@ -664,7 +714,11 @@ class SlideshowView
 	
 	clearVideo() {
         var currentVideo = this.uiElements.currentVideo;
+        //var currentVideoSource = this.uiElements.currentVideoSourceWebm;
 
+        //logForDev('video cleared');
+
+        //currentVideoSource.src = '';
         currentVideo.src = '';
         currentVideo.style.display = 'none';
     }
@@ -868,6 +922,18 @@ class SlideshowView
                 this.uiElements.e621LoginContainer.style.display = checked ? 'inline' : 'none';
 				this.uiElements.e621ApiKeyContainer.style.display = checked ? 'inline' : 'none';
 			}
+
+            if (site == SITE_GELBOORU)
+            {
+                this.uiElements.gelbUserIdContainer.style.display = checked ? 'inline' : 'none';
+                this.uiElements.gelbApiKeyContainer.style.display = checked ? 'inline' : 'none';
+            }
+			
+            if (site == SITE_RULE34)
+            {
+                this.uiElements.r34UserIdContainer.style.display = checked ? 'inline' : 'none';
+                this.uiElements.r34ApiKeyContainer.style.display = checked ? 'inline' : 'none';
+            }
         }
     }
 
@@ -1069,6 +1135,38 @@ class SlideshowView
         this.uiElements.e621ApiKey.value = this._model.e621ApiKey;
     }
 
+    getGelbUserId() {
+        return this.uiElements.gelbUserId.value.trim();
+    }
+
+    updateGelbUserId() {
+        this.uiElements.gelbUserId.value = this._model.gelbUserId;
+    }
+
+    getGelbApiKey() {
+        return this.uiElements.gelbApiKey.value.trim();
+    }
+
+    updateGelbApiKey() {
+        this.uiElements.gelbApiKey.value = this._model.gelbApiKey;
+    }
+
+    getR34UserId() {
+        return this.uiElements.r34UserId.value.trim();
+    }
+
+    updateR34UserId() {
+        this.uiElements.r34UserId.value = this._model.r34UserId;
+    }
+
+    getR34ApiKey() {
+        return this.uiElements.r34ApiKey.value.trim();
+    }
+
+    updateR34ApiKey() {
+        this.uiElements.r34ApiKey.value = this._model.r34ApiKey;
+    }
+
     openUrlInNewWindow(url) {
         window.open(url, '_blank');
     }
@@ -1111,14 +1209,14 @@ class SlideshowView
         });
     }
 
-    openCurrentSlide()
+    openCurrentSlideSource()
     {
         let currentSlide = this._model.getCurrentSlide();
         
         if (currentSlide == null)
             return;
 
-        window.open(currentSlide.viewableWebsitePostUrl, "_blank");
+        this.openUrlInNewWindow(currentSlide.viewableWebsitePostUrl);
     }
 
     updateFavoriteButton() {

@@ -25,6 +25,8 @@ class WebRequester
     
     makeWebsiteRequest(url, onSuccessResponse, onErrorResponse, onAfterAnyResponse, onError, useSecondaryXhr = false)
 	{
+        logForDev(url);
+        
         this.resetConnection(useSecondaryXhr);
         
         let xhr = this.getXhr(useSecondaryXhr);

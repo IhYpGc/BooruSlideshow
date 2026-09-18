@@ -4,8 +4,6 @@ class SiteManagerFactory
     {
         switch (id)
 		{
-			case SITE_ATFBOORU:
-				return new SiteManagerAtfBooru(sitesManager, pageLimit);
 			case SITE_DANBOORU:
 				return new SiteManagerDanbooru(sitesManager, pageLimit);
 			case SITE_DERPIBOORU:
@@ -16,8 +14,6 @@ class SiteManagerFactory
 				return new SiteManagerGelbooru(sitesManager, pageLimit);
 			case SITE_KONACHAN:
 				return new SiteManagerKonachan(sitesManager, pageLimit);
-			case SITE_REALBOORU:
-				return new SiteManagerRealbooru(sitesManager, pageLimit);
 			case SITE_RULE34:
 				return new SiteManagerRule34(sitesManager, pageLimit);
 			case SITE_SAFEBOORU:

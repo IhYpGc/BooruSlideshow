@@ -9,13 +9,11 @@ class SlideshowModel{
         this.searchText = "";
         
         this.sitesToSearch = {
-            [SITE_ATFBOORU]: false,
             [SITE_DANBOORU]: false,
             [SITE_DERPIBOORU]: false,
             [SITE_E621]: false,
             [SITE_GELBOORU]: false,
             [SITE_KONACHAN]: false,
-            [SITE_REALBOORU]: false,
             [SITE_RULE34]: false,
             [SITE_SAFEBOORU]: true,
             [SITE_XBOORU]: false,
@@ -25,10 +23,10 @@ class SlideshowModel{
         this.secondsPerSlide = 6;
         this.maxWidth = null;
         this.maxHeight = null;
-        this.autoFitSlide = false;
+        this.autoFitSlide = true;
         this.includeImages = true;
         this.includeGifs = true;
-        this.includeWebms = false;
+        this.includeWebms = true;
         this.includeExplicit = false;
         this.includeQuestionable = false;
         this.includeSafe = true;
@@ -37,6 +35,10 @@ class SlideshowModel{
         this.derpibooruApiKey = '';
         this.e621Login = ''
         this.e621ApiKey = ''
+        this.gelbLoginId = ''
+        this.gelbApiKey = ''
+		this.r34LoginId = ''
+        this.r34ApiKey = ''
         this.storeHistory = true;
         this.searchHistory = [];
 
@@ -67,6 +69,10 @@ class SlideshowModel{
         this.derpibooruApiKeyUpdatedEvent = new Event(this);
         this.e621LoginUpdatedEvent = new Event(this);
         this.e621ApiKeyUpdatedEvent = new Event(this);
+        this.gelbUserIdUpdatedEvent = new Event(this);
+        this.gelbApiKeyUpdatedEvent = new Event(this);
+		this.r34UserIdUpdatedEvent = new Event(this);
+        this.r34ApiKeyUpdatedEvent = new Event(this);
         this.storeHistoryUpdatedEvent = new Event(this);
         this.searchHistoryUpdatedEvent = new Event(this);
         this.favoriteButtonUpdatedEvent = new Event(this);
@@ -84,28 +90,29 @@ class SlideshowModel{
 
         this.sitesManager = new SitesManager(this, numberOfSlidesToAlwaysHaveReadyToDisplay, maxNumberOfThumbnails);
 		
-		var pageLimit = 100;
+		var standardPageLimit = 100;
 		
-        this.sitesManager.addSite(SITE_ATFBOORU, pageLimit);
-        this.sitesManager.addSite(SITE_DANBOORU, pageLimit);
-        this.sitesManager.addSite(SITE_DERPIBOORU, 10);
-        this.sitesManager.addSite(SITE_E621, pageLimit);
-        this.sitesManager.addSite(SITE_GELBOORU, pageLimit);
-        this.sitesManager.addSite(SITE_KONACHAN, pageLimit);
-        this.sitesManager.addSite(SITE_REALBOORU, pageLimit);
-        this.sitesManager.addSite(SITE_RULE34, pageLimit);
-        this.sitesManager.addSite(SITE_SAFEBOORU, pageLimit);
-        this.sitesManager.addSite(SITE_XBOORU, pageLimit);
-        this.sitesManager.addSite(SITE_YANDERE, pageLimit);
+        this.sitesManager.addSite(SITE_DANBOORU, standardPageLimit);
+        this.sitesManager.addSite(SITE_DERPIBOORU, 50);
+        this.sitesManager.addSite(SITE_E621, standardPageLimit);
+        this.sitesManager.addSite(SITE_GELBOORU, standardPageLimit);
+        this.sitesManager.addSite(SITE_KONACHAN, standardPageLimit);
+        this.sitesManager.addSite(SITE_RULE34, standardPageLimit);
+        this.sitesManager.addSite(SITE_SAFEBOORU, standardPageLimit);
+        this.sitesManager.addSite(SITE_XBOORU, standardPageLimit);
+        this.sitesManager.addSite(SITE_YANDERE, standardPageLimit);
     }
 
-    loadUserSettings()
+    async loadUserSettings()
     {
-        this.dataLoader.loadUserSettings();
+        //console.log("SlideshowModel.loadUserSettings")
+        let result = await this.dataLoader.loadUserSettings();
     }
 	
     pingSites()
     {
+        console.log("Checking status of sites...");
+
 		var _this = this;
 		this.sitesManager.pingSites(function(siteManager){
 			if (!siteManager.isOnline)
@@ -607,6 +614,42 @@ class SlideshowModel{
         this.dataLoader.saveE621ApiKey();
 
         this.e621ApiKeyUpdatedEvent.notify();
+    }
+
+    setGelbUserId(gelbUserId)
+    {
+        this.gelbUserId = gelbUserId;
+
+        this.dataLoader.saveGelbUserId();
+
+        this.gelbUserIdUpdatedEvent.notify();
+    }
+
+    setGelbApiKey(gelbApiKey)
+    {
+        this.gelbApiKey = gelbApiKey;
+
+        this.dataLoader.saveGelbApiKey();
+
+        this.gelbApiKeyUpdatedEvent.notify();
+    }
+	
+	setR34UserId(r34UserId)
+    {
+        this.r34UserId = r34UserId;
+
+        this.dataLoader.saveR34UserId();
+
+        this.r34UserIdUpdatedEvent.notify();
+    }
+
+    setR34ApiKey(r34ApiKey)
+    {
+        this.r34ApiKey = r34ApiKey;
+
+        this.dataLoader.saveR34ApiKey();
+
+        this.r34ApiKeyUpdatedEvent.notify();
     }
 
     setStoreHistory(onOrOff)
