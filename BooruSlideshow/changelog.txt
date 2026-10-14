@@ -1,5 +1,15 @@
 Changelog
 
+Version 10.7.3
+* Implemented a preffered blob-style download to fix Gelbooru downloads on chromium browsers.
+* Updated Konachan to new url
+
+Version 10.7.2
+* Fixed Gelbooru on firefox
+
+Version 10.7.1
+* Added E621 to the reffer file to fix CORS issue 
+
 Version 10.7
 Added E6ai support (If you want some slop on your knob)
 

@@ -4,7 +4,7 @@
 	"name": "Booru Slideshow",
 	"short_name": "Booru SS",
 	"description": "View a slideshow from a Booru site based on your search.",
-	"version": "10.7.1",
+	"version": "10.7.3",
 
 	"action":
 	{
@@ -39,17 +39,23 @@
 	],
 	"host_permissions":
 	[
-		"https://*.donmai.us/*",
-		"https://donmai.us/*",
-		"https://derpibooru.org/*",
-		"https://*.e621.net/*",
-		"https://*.e6ai.net/*",
-		"https://*.gelbooru.com/*",
-		"https://*.konachan.net/*",
-		"https://*.rule34.xxx/*",
-		"https://safebooru.org/*",
-		"https://xbooru.com/*",
-		"https://*.yande.re/*"
+        "https://danbooru.donmai.us/*",
+        "https://cdn.donmai.us/*",
+        "https://derpibooru.org/*",
+        "https://derpicdn.net/*",
+        "https://e621.net/*",
+        "https://*.e621.net/*",
+        "https://e6ai.net/*",
+        "https://*.e6ai.net/*",
+        "https://gelbooru.com/*",
+        "https://*.gelbooru.com/*",
+        "https://konachan.net/*",
+        "https://rule34.xxx/*",
+        "https://*.rule34.xxx/*",
+        "https://safebooru.org/*",
+        "https://xbooru.com/*",
+        "https://yande.re/*",
+        "https://files.yande.re/*"
 	],
 	"declarative_net_request" :
 	{
