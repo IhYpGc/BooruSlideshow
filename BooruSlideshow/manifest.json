@@ -39,19 +39,17 @@
 	],
 	"host_permissions":
 	[
-		"https://danbooru.donmai.us/*",
-		"https://cdn.donmai.us/*",
+		"https://*.donmai.us/*",
+		"https://donmai.us/*",
 		"https://derpibooru.org/*",
-		"https://e621.net/*",
 		"https://*.e621.net/*",
-		"https://e6ai.net/*",
 		"https://*.e6ai.net/*",
 		"https://*.gelbooru.com/*",
-		"https://konachan.com/*",
+		"https://*.konachan.net/*",
 		"https://*.rule34.xxx/*",
 		"https://safebooru.org/*",
 		"https://xbooru.com/*",
-		"https://yande.re/*"
+		"https://*.yande.re/*"
 	],
 	"declarative_net_request" :
 	{

@@ -748,13 +748,6 @@ class PersonalListView
         if (currentSlide == null)
             return;
         
-        let url = currentSlide.fileUrl;
-        let filename = "bs/" + url.substring(url.lastIndexOf('/')+1);
-        
-        chrome.downloads.download({
-            url: currentSlide.fileUrl,
-            filename: filename,
-            conflictAction: "overwrite"
-        });
+        downloadSlideFile(currentSlide.fileUrl, getDownloadFilenameForSlide(currentSlide));
     }
 }
