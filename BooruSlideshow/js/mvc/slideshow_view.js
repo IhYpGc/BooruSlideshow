@@ -1242,7 +1242,10 @@ class SlideshowView
         
         let url = currentSlide.fileUrl;
         
-        let filename = "bs/" + url.substring(url.lastIndexOf('/')+1);
+        let basename = url.substring(url.lastIndexOf('/')+1).split('?')[0].split('#')[0];
+        if (!basename)
+            basename = currentSlide.id + '.jpg';
+        let filename = "bs/" + basename;
         
         chrome.downloads.download({
             url: currentSlide.fileUrl,

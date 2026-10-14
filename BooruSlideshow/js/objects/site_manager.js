@@ -305,7 +305,7 @@ class SiteManager
 	{
 		if (url.substring(0,2) == '//')
 		{
-			url = 'http:' + url;
+			url = 'https:' + url;
 		}
 		
 		return url;

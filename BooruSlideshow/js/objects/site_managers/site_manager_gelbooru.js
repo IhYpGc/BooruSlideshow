@@ -26,7 +26,7 @@ class SiteManagerGelbooru extends SiteManager
 		var parser = new DOMParser();
 		var xml = parser.parseFromString(responseText, "text/xml");
 		
-		var xmlPosts = xml.getElementsByTagName("posts");
+		var xmlPosts = xml.getElementsByTagName("post");
 		
 		return (xmlPosts.length > 0);
 	}
@@ -39,14 +39,16 @@ class SiteManagerGelbooru extends SiteManager
 
 	addSlide(xmlPost)
 	{
-		
+		// Gelbooru DAPI returns post data as child *elements*:
+		// <post><id>...</id><file_url>...</file_url>...</post>
+		// (unlike the attribute style used by rule34/safebooru/xbooru)
 		if (doesXmlContainElement(xmlPost, 'file_url') &&
 			doesXmlContainElement(xmlPost, 'preview_url') &&
 			this.isPathForSupportedMediaType(getXmlElementStringValueSafe(xmlPost, 'file_url')))
 		{
 			if (this.areSomeTagsAreBlacklisted(getXmlElementStringValueSafe(xmlPost, 'tags')))
 				return;
-			
+
 			var newSlide = new Slide(
 				SITE_GELBOORU,
 				getXmlElementStringValueSafe(xmlPost, 'id'),
@@ -61,9 +63,6 @@ class SiteManagerGelbooru extends SiteManager
 				getXmlElementStringValueSafe(xmlPost, 'md5'),
 				getXmlElementStringValueSafe(xmlPost, 'tags')
 			);
-			
-			console.log(this.reformatFileUrl(getXmlElementStringValueSafe(xmlPost, 'file_url')));
-			console.log(this.reformatFileUrl(getXmlElementStringValueSafe(xmlPost, 'preview_url')));
 
 			this.allUnsortedSlides.push(newSlide);
 		}
