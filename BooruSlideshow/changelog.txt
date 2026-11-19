@@ -1,7 +1,11 @@
 Changelog
 
+Version 10.8
+* Updated to support new E621 API
+* Removed E6ai support (sites gone, lol)
+
 Version 10.7
-Added E6ai support (If you want some slop on your knob)
+*Added E6ai support (If you want some slop on your knob)
 
 Version 10.6
 * Added API key feature to support Rule34
