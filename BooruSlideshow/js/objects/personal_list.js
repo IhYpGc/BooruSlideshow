@@ -105,6 +105,9 @@ class PersonalList
 
     condenseE621Tags(tags)
     {
+        if (Array.isArray(tags))
+            return tags.join(" ");
+
         var condensedTagArray = [];
 
 		for(var prop in tags)
@@ -130,14 +133,36 @@ class PersonalList
     getImageTagsE621(id, webRequester)
     {
         return new Promise((resolve) => {
-            webRequester.makeWebsiteRequest(`https://e621.net/posts.json?tags=id%3A${id}`, () => {
-                var data = JSON.parse(arguments[1].xhr.responseText).posts[0]
-                if(!data){ 
-                    resolve("")
-                    return
-                }
-                resolve(this.condenseE621Tags(data.tags))
-            })
+            webRequester.makeWebsiteRequest(
+                `https://e621.net/posts.json?tags=id%3A${id}`,
+                (responseText) => {
+                    var jsonPosts;
+
+                    try
+                    {
+                        jsonPosts = JSON.parse(responseText);
+                    }
+                    catch(error)
+                    {
+                        resolve("");
+                        return;
+                    }
+
+                    // e621 now returns a bare array of posts. Older responses
+                    // wrapped the array in a "posts" property, so support both.
+                    var posts = Array.isArray(jsonPosts) ? jsonPosts : (jsonPosts != null ? jsonPosts.posts : null);
+
+                    if (posts == null || posts.length == 0)
+                    {
+                        resolve("");
+                        return;
+                    }
+
+                    resolve(this.condenseE621Tags(posts[0].tags));
+                },
+                () => { resolve(""); },
+                () => { resolve(""); }
+            );
         })
     }
 

@@ -25,17 +25,18 @@ class SiteManagerE621 extends SiteManager
 		{
 			jsonPosts = JSON.parse(responseText);
 		}
-		catch(e)
+		catch(error)
 		{
 			console.log("JSON failed to parse.");
-			console.log(e);
+			console.log(error);
 			return false;
 		}
 		
-		if (jsonPosts == null)
-			return false;
+		// e621 now returns a bare array of posts. Older responses wrapped the
+		// array in a "posts" property, so support both shapes.
+		var posts = Array.isArray(jsonPosts) ? jsonPosts : (jsonPosts != null ? jsonPosts.posts : null);
 		
-		return (jsonPosts.posts.length > 0);
+		return (posts != null && posts.length > 0);
 	}
 
 	addSlides(responseText)
@@ -45,6 +46,9 @@ class SiteManagerE621 extends SiteManager
 
 	condenseTags(jsonPostTags)
 	{
+		if (Array.isArray(jsonPostTags))
+			return jsonPostTags.join(" ");
+
 		var condensedTagArray = [];
 
 		for(var prop in jsonPostTags)
@@ -57,87 +61,102 @@ class SiteManagerE621 extends SiteManager
 
 	addSlide(jsonPost)
 	{
-		if (!jsonPost.hasOwnProperty('id') ||
-			!jsonPost.hasOwnProperty('file') ||
-			!jsonPost.hasOwnProperty('preview') ||
+		if (jsonPost == null ||
+			!jsonPost.hasOwnProperty('id') ||
+			!jsonPost.hasOwnProperty('files') ||
 			!jsonPost.hasOwnProperty('created_at') ||
-			!jsonPost.hasOwnProperty('score') ||
-			!jsonPost.hasOwnProperty('tags') ||
-			!jsonPost.file.hasOwnProperty('url'))
+			!jsonPost.hasOwnProperty('tags'))
 			return;
 
-		if (jsonPost.file.url == null)
+		var files = jsonPost.files;
+		var original = files.original;
+		var preview = files.preview;
+		var meta = files.meta;
+
+		if (original == null || preview == null || meta == null || !original.hasOwnProperty('url'))
+			return;
+
+		var fileUrl = original.url;
+
+		if (fileUrl == null)
 		{
 			// TODO: Make this into an option (though will need to figure out all the cases in which it happens to get a proper name for it)
-			console.log("The file.url was null for post " + jsonPost.id + ". (This is caused by a global blacklist perhaps from not being logged in. Trying to recreate from md5.");
-			
-			jsonPost.file.url = this.RecreateUrlFromMd5(jsonPost.file);
+			console.log("The file URL was null for post " + jsonPost.id + ". (This is caused by a global blacklist perhaps from not being logged in. Trying to recreate from md5.");
 
-			if (jsonPost.file.url == null)
+			fileUrl = this.RecreateUrlFromMd5(meta.md5, meta.ext);
+
+			if (fileUrl == null)
 			{
 				return;
 			}
 			else
 			{
-				console.log("New URL is: " + jsonPost.file.url);
+				console.log("New URL is: " + fileUrl);
 			}
 		}
-		
-		if (!this.isPathForSupportedMediaType(jsonPost.file.url))
+
+		if (!this.isPathForSupportedMediaType(fileUrl))
 			return;
 		
 		if (!this.isRatingAllowed(jsonPost.rating))
 			return;
 
-		jsonPost.tags = this.condenseTags(jsonPost.tags);
+		var tags = this.condenseTags(jsonPost.tags);
 		
-		if (this.areSomeTagsAreBlacklisted(jsonPost.tags))
+		if (this.areSomeTagsAreBlacklisted(tags))
 			return;
 		
-		var postUrl = this.url + '/post/show/' + jsonPost.id;
+		var previewUrl = preview.jpg != null ? preview.jpg : preview.webp;
+
+		if (previewUrl == null)
+			previewUrl = fileUrl;
+		
+		var postUrl = this.url + '/posts/' + jsonPost.id;
 		
 		var urlPrefix = '';
 		
-		if (postUrl.substring(0, 4) != 'http')
+		if (fileUrl.substring(0, 4) != 'http')
 			urlPrefix = 'https://';
 
-		logForDev(urlPrefix + jsonPost.file.url + " ; " + urlPrefix + jsonPost.preview.url + " ; " + postUrl)
+		logForDev(urlPrefix + fileUrl + " ; " + urlPrefix + previewUrl + " ; " + postUrl)
+		
+		var score = (jsonPost.stats != null && jsonPost.stats.score != null) ? jsonPost.stats.score.total : jsonPost.score;
 		
 		var newSlide = new Slide(
 			SITE_E621,
 			jsonPost.id,
-			urlPrefix + jsonPost.file.url,
-			urlPrefix + jsonPost.preview.url,
+			urlPrefix + fileUrl,
+			urlPrefix + previewUrl,
 			postUrl,
-			jsonPost.file.width,
-			jsonPost.file.height,
+			original.width,
+			original.height,
 			new Date(jsonPost.created_at),
-			jsonPost.score,
-			this.getMediaTypeFromPath(jsonPost.file.url),
-			jsonPost.file.md5,
-			jsonPost.tags
+			score,
+			this.getMediaTypeFromPath(fileUrl),
+			meta.md5,
+			tags
 		);
 
 		this.allUnsortedSlides.push(newSlide);
 	}
 
-	RecreateUrlFromMd5(file)
+	RecreateUrlFromMd5(md5, ext)
 	{
 		// Ref: Discord > e621.net > Donovan DMC
-		// Take the file.md5 (as an example: AABBCCCCCCCCCCCCCCCCCCCCCCCCCCCC)
+		// Take the md5 (as an example: AABBCCCCCCCCCCCCCCCCCCCCCCCCCCCC)
 		// and convert it to
-		// https://static1.e621.net/data/AA/BB/AABBCCCCCCCCCCCCCCCCCCCCCCCCCCCC.{file.ext}
+		// https://static1.e621.net/data/AA/BB/AABBCCCCCCCCCCCCCCCCCCCCCCCCCCCC.{ext}
 		
-		const BASE_PATH = 'https://static1.e621.net/data/';
+		const BASE_PATH = 'https://static1.e621.net/data';
 
-		if (file.md5 == null || file.md5.length < 4 || file.ext == null)
+		if (md5 == null || md5.length < 4 || ext == null)
 		{
 			return null;
 		}
 
-		let firstTwoCharacters = file.md5.substring(0, 2);
-		let secondTwoCharacters = file.md5.substring(2, 4);
+		let firstTwoCharacters = md5.substring(0, 2);
+		let secondTwoCharacters = md5.substring(2, 4);
 
-		return `${BASE_PATH}/${firstTwoCharacters}/${secondTwoCharacters}/${file.md5}.${file.ext}`
+		return `${BASE_PATH}/${firstTwoCharacters}/${secondTwoCharacters}/${md5}.${ext}`
 	}
 }
