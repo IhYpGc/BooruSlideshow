@@ -11,6 +11,11 @@
                     "header": "Referer",
                     "operation": "set",
                     "value": "https://gelbooru.com"
+                },
+                {
+                    "header": "Sec-Fetch-Mode",
+                    "operation": "set",
+                    "value": "same-origin"
                 }
             ]
         },
@@ -69,6 +74,33 @@
         "condition":
         {
             "urlFilter": "||rule34.xxx/",
+            "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+        }
+    }
+],
+   {
+        "id": 3,
+        "priority": 1,
+        "action":
+        {
+            "type": "modifyHeaders",
+            "requestHeaders":
+            [
+                {
+                    "header": "Referer",
+                    "operation": "set",
+                    "value": "https://konachan.net"
+                },
+                {
+                    "header": "Sec-Fetch-Mode",
+                    "operation": "set",
+                    "value": "same-origin"
+                }
+            ]
+        },
+        "condition":
+        {
+            "urlFilter": "||konachan.net/",
             "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
         }
     }
