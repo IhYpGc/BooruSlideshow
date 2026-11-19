@@ -749,10 +749,14 @@ class PersonalListView
             return;
         
         let url = currentSlide.fileUrl;
-        let filename = "bs/" + url.substring(url.lastIndexOf('/')+1);
+        let filename = "bs/" + url.substring(url.lastIndexOf('/')+1).split('?')[0].split('#')[0];
+        
+        // Strip query parameters and fragments from the download URL
+        // to prevent browsers from saving .htm files instead of images
+        let downloadUrl = url.split('?')[0].split('#')[0];
         
         chrome.downloads.download({
-            url: currentSlide.fileUrl,
+            url: downloadUrl,
             filename: filename,
             conflictAction: "overwrite"
         });
