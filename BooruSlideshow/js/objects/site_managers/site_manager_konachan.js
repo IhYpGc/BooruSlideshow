@@ -2,7 +2,7 @@ class SiteManagerKonachan extends SiteManager
 {
     constructor(sitesManager, pageLimit)
     {
-		super(sitesManager, SITE_KONACHAN, 'https://konachan.com', pageLimit);
+		super(sitesManager, SITE_KONACHAN, 'https://konachan.net', pageLimit);
     }
     
     buildPingRequestUrl()
