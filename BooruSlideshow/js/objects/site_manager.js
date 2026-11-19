@@ -210,13 +210,17 @@ class SiteManager
 		{
 			jsonPosts = jsonPosts["images"];
 		}
-		else if (this.id == SITE_E621)
+		else if (this.id == SITE_E621 || this.id == SITE_E6AI)
 		{
-			jsonPosts = jsonPosts["posts"]
+			// e621 (and e6ai) now return a bare array of posts. Older responses
+			// wrapped the array in a "posts" property, so support both shapes.
+			jsonPosts = Array.isArray(jsonPosts) ? jsonPosts : jsonPosts["posts"];
 		}
-		else if (this.id == SITE_E6AI)
+		
+		if (jsonPosts == null)
 		{
-			jsonPosts = jsonPosts["posts"]
+			this.hasExhaustedSearch = true;
+			return;
 		}
 		
 		this.hasExhaustedSearch = (jsonPosts.length < this.pageLimit);
