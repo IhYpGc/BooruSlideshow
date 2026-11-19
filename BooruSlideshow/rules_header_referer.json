@@ -76,10 +76,9 @@
             "urlFilter": "||rule34.xxx/",
             "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
         }
-    }
-],
+    },
    {
-        "id": 3,
+        "id": 4,
         "priority": 1,
         "action":
         {
